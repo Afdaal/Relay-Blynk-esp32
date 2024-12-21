@@ -1,1 +1,70 @@
-kontol relay dengan blynk esp32 board
+#define BLYNK_TEMPLATE_ID "TMPL6MwMVdNWR"
+#define BLYNK_TEMPLATE_NAME "Dalz"
+#define BLYNK_AUTH_TOKEN "nocrkSZH-diFf-rKi3AQR3WXU0IqfjrJ"   // Ganti dengan Auth Token Anda
+
+#include <WiFi.h>
+#include <BlynkSimpleEsp32.h>
+
+// Masukkan kredensial WiFi
+char ssid[] = "PONDOK AN-NUR 2.4G";      // Ganti dengan SSID WiFi Anda
+char pass[] = "teknik09";  // Ganti dengan Password WiFi Anda
+
+// Pin relay
+#define RELAY1 27
+#define RELAY2 26
+#define RELAY3 33
+#define RELAY4 14
+
+// Blynk Virtual Pin untuk masing-masing relay
+#define VPIN_RELAY1 V0
+#define VPIN_RELAY2 V1
+#define VPIN_RELAY3 V2
+#define VPIN_RELAY4 V3
+
+void setup() {
+  // Inisialisasi serial monitor
+  Serial.begin(115200);
+
+  // Inisialisasi pin relay sebagai output
+  pinMode(RELAY1, OUTPUT);
+  pinMode(RELAY2, OUTPUT);
+  pinMode(RELAY3, OUTPUT);
+  pinMode(RELAY4, OUTPUT);
+
+  // Pastikan relay dalam kondisi mati (LOW) saat start
+  digitalWrite(RELAY1, LOW);
+  digitalWrite(RELAY2, LOW);
+  digitalWrite(RELAY3, LOW);
+  digitalWrite(RELAY4, LOW);
+
+  // Mulai koneksi Blynk
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+}
+
+void loop() {
+  Blynk.run();
+}
+
+BLYNK_WRITE(VPIN_RELAY1) {
+  int state = param.asInt();
+  digitalWrite(RELAY1, state);
+  Serial.println("Relay 1: " + String(state));
+}
+
+BLYNK_WRITE(VPIN_RELAY2) {
+  int state = param.asInt();
+  digitalWrite(RELAY2, state);
+  Serial.println("Relay 2: " + String(state));
+}
+
+BLYNK_WRITE(VPIN_RELAY3) {
+  int state = param.asInt();
+  digitalWrite(RELAY3, state);
+  Serial.println("Relay 3: " + String(state));
+}
+
+BLYNK_WRITE(VPIN_RELAY4) {
+  int state = param.asInt();
+  digitalWrite(RELAY4, state);
+  Serial.println("Relay 4: " + String(state));
+}
